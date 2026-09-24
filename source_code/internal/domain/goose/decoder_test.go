@@ -103,33 +103,32 @@ func TestDecodeFromExamplePcap(t *testing.T) {
 }
 
 func TestSubscriptionMatch(t *testing.T) {
-	path := testPcapPath(t)
-	frames := readPcapFrames(t, path)
+	// Use a synthetic frame so the subscription is independent of captured devices.
+	pdu := strictTestPDU()
+	pdu.SrcMAC = mustMAC(t, "02:00:00:00:00:01")
+	pdu.GocbRef = "IED1/LLN0$GO$Control"
+	pdu.DatSet = "IED1/LLN0$DataSet1"
+	pdu.GoID = "CTRL1"
+	decoded, err := Decode(Encode(pdu))
+	if err != nil {
+		t.Fatalf("decode synthetic frame: %v", err)
+	}
 
-	// Subscribe using actual values from goose_dump_example.pcap.
 	sub := &Subscription{
-		Name:    "RET_Control",
+		Name:    "IED_Control",
 		DstMAC:  mustMAC(t, "01:0c:cd:01:00:01"),
 		AppID:   0x0001,
-		GocbRef: "RET61850CTRL/LLN0$GO$Control_DataSet1",
-		GoID:    "1",
+		GocbRef: "IED1/LLN0$GO$Control",
+		GoID:    "CTRL1",
 	}
 
-	matched := 0
-	for _, f := range frames {
-		pdu, err := Decode(f)
-		if err != nil {
-			continue
-		}
-		if !sub.Matches(pdu) {
-			continue
-		}
-		matched++
+	if !sub.Matches(decoded) {
+		t.Fatal("synthetic frame did not match subscription")
 	}
-	if matched == 0 {
-		t.Fatal("no frames matched subscription")
+	decoded.GocbRef = "IED2/LLN0$GO$Control"
+	if sub.Matches(decoded) {
+		t.Fatal("frame with a different GoCB reference matched subscription")
 	}
-	t.Logf("matched %d frames against %s", matched, sub.Name)
 }
 
 func mustMAC(t *testing.T, s string) []byte {

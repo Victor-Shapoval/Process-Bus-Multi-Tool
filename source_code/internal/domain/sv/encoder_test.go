@@ -235,21 +235,22 @@ func TestEncodeLengthFieldsMatchSerializedFrame(t *testing.T) {
 	}
 }
 
-func TestEncodeMatchesReferenceCaptureFrame(t *testing.T) {
+func TestEncodeMatchesReferenceFrame(t *testing.T) {
 	asdu := ASDU{
-		DstMAC:  net.HardwareAddr{0x01, 0x0C, 0xCD, 0x04, 0x00, 0x11},
-		SrcMAC:  net.HardwareAddr{0x00, 0x50, 0xC2, 0x4F, 0x9B, 0x52},
+		DstMAC:  net.HardwareAddr{0x01, 0x0C, 0xCD, 0x04, 0x00, 0x01},
+		SrcMAC:  net.HardwareAddr{0x02, 0x00, 0x00, 0x00, 0x00, 0x01},
 		AppID:   0x4000,
-		SvID:    "RTDSMU1101",
+		SvID:    "PBMTMU0001",
 		SmpCnt:  0,
 		ConfRev: 1,
 	}
 
-	// First SV frame from adds/exm_traffic.pcapng. Its 64-byte seqData is all
-	// zero; the ASDU intentionally contains no datSet, refrTm, smpRate, or smpMod.
-	referenceHex := "010ccd0400110050c24f9b5288ba" +
+	// Synthetic reference with a locally administered source MAC and neutral svID.
+	// Its 64-byte seqData is all zero; the ASDU intentionally contains no datSet,
+	// refrTm, smpRate, or smpMod. Keep the expected bytes independent of Encode.
+	referenceHex := "010ccd04000102000000000188ba" +
 		"4000006c000000006062800101a25d305b" +
-		"800a525444534d5531313031820200008304000000018501008740" +
+		"800a50424d544d5530303031820200008304000000018501008740" +
 		strings.Repeat("00", 64)
 	want, err := hex.DecodeString(referenceHex)
 	if err != nil {
@@ -257,7 +258,7 @@ func TestEncodeMatchesReferenceCaptureFrame(t *testing.T) {
 	}
 	got := Encode([]ASDU{asdu})
 	if !bytes.Equal(got, want) {
-		t.Fatalf("encoded frame differs from exm_traffic.pcapng first SV frame:\nwant %X\n got %X", want, got)
+		t.Fatalf("encoded frame differs from synthetic reference frame:\nwant %X\n got %X", want, got)
 	}
 }
 
