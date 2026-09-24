@@ -1,0 +1,55 @@
+# Enables the PTP Server / Grandmaster module.
+# false hides the module from the dashboard; true allows it to be started.
+enabled: false
+
+# Network interface used to send and exchange PTP messages.
+# In the GUI, this field is selected from the system interface list.
+interface: eth0
+
+# PTP profile: default or power (IEEE C37.238).
+profile: default
+
+# PTP domain number (0-255). It must match on the Server and Client.
+# C37.238-2011 commonly uses 0; C37.238-2017 Extended commonly uses 254.
+# This field is independent of the version and may be set manually by the engineer.
+domain_number: 0
+
+# Delay mechanism for the Default Profile: e2e or p2p.
+# The application forces p2p for the Power Profile.
+delay_mechanism: e2e
+
+# Default Profile transport: udp or ethernet.
+# The application forces ethernet (L2) for the Power Profile.
+transport: ethernet
+
+# TAI-UTC offset in seconds. Modern systems commonly use 37.
+utc_offset: 37
+
+# Time source advertised in Announce. This field does not connect GPS by itself.
+time_source: gps
+
+# Enable traceability only for a verified external source.
+time_traceable: false
+frequency_traceable: false
+
+# Power Profile parameters. version selects the actual C37.238 TLV format:
+# 2011 uses subtype 0x000001; 2017 uses subtype 0x000002.
+power_profile:
+  version: "2011"
+  grandmaster_id: 3
+
+  # Version 2011 fields. Values 60/0 match the tested protection-relay capture.
+  grandmaster_time_inaccuracy: 60
+  network_time_inaccuracy: 0
+
+  # Version 2017 field, not transmitted in version 2011.
+  total_time_inaccuracy: 100
+
+  # When enabled is true, this is transmitted after Organization Extension in both versions.
+  alternate_time_offset:
+    enabled: true
+    key_field: 1
+    current_offset: 10763
+    jump_seconds: 0
+    time_of_next_jump: 0
+    display_name: "UTC+03:00"

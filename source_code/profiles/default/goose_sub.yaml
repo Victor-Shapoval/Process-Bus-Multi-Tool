@@ -1,0 +1,39 @@
+# Enables the GOOSE reception module.
+# false hides the module from the dashboard; true allows it to be started.
+enabled: false
+
+# Network interface used to receive GOOSE traffic.
+# In the GUI, this field is selected from the system interface list.
+interface: eth0
+
+# Promiscuous mode receives all Ethernet frames on the interface.
+# true is usually convenient for Process Bus diagnostics and commissioning.
+promiscuous: true
+
+# List of GOOSE streams to receive.
+# The complete allData of matching messages is shown in the module control window.
+subscriptions:
+    # Human-readable subscription name used in the GUI and logs.
+    - name: IED_GOOSE
+      # Destination MAC of the GOOSE multicast stream.
+      dst_mac: 01:0c:cd:01:00:01
+      # Publisher source MAC. An empty value accepts any source MAC.
+      src_mac: ""
+      # GOOSE stream APPID. Hexadecimal notation such as 0x0001 is supported.
+      app_id: 0x0001
+      # GoCB reference from the IED configuration.
+      gocb_ref: IED1/LLN0$GO$Control
+      # DataSet reference and its expected configuration revision.
+      dat_set: IED1/LLN0$DataSet1
+      conf_rev: 1
+      # GoID from the GOOSE message. Leave empty when unused.
+      go_id: CTRL1
+      # Expected IEEE 802.1Q parameters. Remove both fields to accept
+      # tagged and untagged frames without VLAN filtering.
+      vlan_id: 1
+      vlan_pri: 4
+      # The regular Subscriber ignores test, simulation, and ndsCom messages.
+      # Allow them only for commissioning and diagnostics.
+      accept_test: false
+      accept_simulation: false
+      accept_nds_com: false

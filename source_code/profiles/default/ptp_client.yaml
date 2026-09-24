@@ -1,0 +1,32 @@
+# Enables the PTP Client module.
+# false hides the module from the dashboard; true allows it to be started.
+enabled: false
+
+# Explicit clock source: local PBMT server or external network Grandmaster.
+# Sources never switch automatically.
+source: external
+
+# Network interface used to receive and exchange PTP messages.
+# In the GUI, this field is selected from the system interface list.
+interface: eth0
+
+# PTP profile: default or power (IEEE C37.238).
+profile: default
+
+# Expected IEEE C37.238 wire version when profile is power.
+# The client accepts a Grandmaster only when its Organization Extension TLV matches.
+power_profile:
+  version: "2011"
+
+# PTP domain number to receive (0-255). It must match the Grandmaster.
+# C37.238-2011 commonly uses 0; C37.238-2017 Extended commonly uses 254.
+# This field is independent of the Server version and follows the actual Grandmaster.
+domain_number: 0
+
+# Delay mechanism for the Default Profile: e2e or p2p.
+# The application forces p2p for the Power Profile.
+delay_mechanism: e2e
+
+# Default Profile transport: udp or ethernet.
+# The application forces ethernet (L2) for the Power Profile.
+transport: ethernet

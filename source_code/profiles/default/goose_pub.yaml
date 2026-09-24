@@ -1,0 +1,86 @@
+# Enables the GOOSE publication module.
+enabled: false
+
+# Network interface used to send GOOSE messages.
+interface: eth0
+
+# List of GOOSE publishers.
+publishers:
+    - name: PBMT_GOOSE
+      dst_mac: 01:0c:cd:01:00:01
+      src_mac: 00:11:22:33:44:55
+      app_id: 0x0001
+      gocb_ref: IED1/LLN0$GO$Control
+      dat_set: IED1/LLN0$DataSet1
+      go_id: CTRL1
+      conf_rev: 1
+      nds_com: false
+      vlan_id: 1
+      vlan_pri: 4
+      min_interval_ms: 10
+      max_interval_ms: 2000
+      dataset:
+        - {name: Signal1.stVal, type: bool}
+        - {name: Signal1.q, type: quality}
+        - {name: Signal2.stVal, type: bool}
+        - {name: Signal2.q, type: quality}
+        - {name: Signal3.stVal, type: bool}
+        - {name: Signal3.q, type: quality}
+        - {name: Signal4.stVal, type: bool}
+        - {name: Signal4.q, type: quality}
+        - {name: Signal5.stVal, type: bool}
+        - {name: Signal5.q, type: quality}
+        - {name: Signal6.stVal, type: bool}
+        - {name: Signal6.q, type: quality}
+        - {name: Signal7.stVal, type: bool}
+        - {name: Signal7.q, type: quality}
+        - {name: Signal8.stVal, type: bool}
+        - {name: Signal8.q, type: quality}
+        - {name: Signal9.stVal, type: bool}
+        - {name: Signal9.q, type: quality}
+        - {name: Signal10.stVal, type: bool}
+        - {name: Signal10.q, type: quality}
+        - {name: Signal11.stVal, type: bool}
+        - {name: Signal11.q, type: quality}
+        - {name: Signal12.stVal, type: bool}
+        - {name: Signal12.q, type: quality}
+        - {name: Signal13.stVal, type: bool}
+        - {name: Signal13.q, type: quality}
+        - {name: Signal14.stVal, type: bool}
+        - {name: Signal14.q, type: quality}
+        - {name: Signal15.stVal, type: bool}
+        - {name: Signal15.q, type: quality}
+        - {name: Signal16.stVal, type: bool}
+        - {name: Signal16.q, type: quality}
+        - {name: Signal17.stVal, type: bool}
+        - {name: Signal17.q, type: quality}
+        - {name: Signal18.stVal, type: bool}
+        - {name: Signal18.q, type: quality}
+        - {name: Signal19.stVal, type: bool}
+        - {name: Signal19.q, type: quality}
+        - {name: Signal20.stVal, type: bool}
+        - {name: Signal20.q, type: quality}
+        - {name: Signal21.stVal, type: bool}
+        - {name: Signal21.q, type: quality}
+        - {name: Signal22.stVal, type: bool}
+        - {name: Signal22.q, type: quality}
+        - {name: Signal23.stVal, type: bool}
+        - {name: Signal23.q, type: quality}
+        - {name: Signal24.stVal, type: bool}
+        - {name: Signal24.q, type: quality}
+        - {name: Signal25.stVal, type: bool}
+        - {name: Signal25.q, type: quality}
+        - {name: Signal26.stVal, type: bool}
+        - {name: Signal26.q, type: quality}
+        - {name: Signal27.stVal, type: bool}
+        - {name: Signal27.q, type: quality}
+        - {name: Signal28.stVal, type: bool}
+        - {name: Signal28.q, type: quality}
+        - {name: Signal29.stVal, type: bool}
+        - {name: Signal29.q, type: quality}
+        - {name: Signal30.stVal, type: bool}
+        - {name: Signal30.q, type: quality}
+        - {name: Signal31.stVal, type: bool}
+        - {name: Signal31.q, type: quality}
+        - {name: Signal32.stVal, type: bool}
+        - {name: Signal32.q, type: quality}

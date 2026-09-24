@@ -1,0 +1,35 @@
+# Enables the Sampled Values publication module.
+# false hides the module from the dashboard; true allows it to be started.
+enabled: false
+
+# Network interface used to send SV frames.
+# In the GUI, this field is selected from the system interface list.
+interface: eth0
+
+# List of SV publishers.
+streams:
+  # Human-readable publisher name used in the GUI and logs.
+  - name: PBMT_SV
+    # Destination MAC of the SV multicast stream.
+    dst_mac: 01:0c:cd:04:00:01
+    # Source MAC written to the Ethernet frame.
+    src_mac: 00:11:22:33:44:55
+    # SV stream APPID. IEC 61850-9-2LE commonly uses the 0x4000 range.
+    app_id: 0x4001
+    # svID from the SV ASDU.
+    sv_id: PBMTMU0101
+    # DataSet name. The exported ICD references the same name.
+    dat_set: PhsMeas1
+    # Configuration revision. It must match the confRev expected by the subscriber.
+    conf_rev: 1
+    # VLAN ID. Remove the field or leave it empty through the GUI when VLAN is unnecessary.
+    vlan_id: 1
+    # VLAN priority PCP in the range 0..7.
+    vlan_pri: 4
+    # Samples per grid period. The 9-2LE Publisher uses 80.
+    smp_rate: 80
+    # Frequency that combines with smp_rate to determine the SV frame transmission rate.
+    # This is not the manually configured electrical sine-wave frequency from Manual.
+    sample_timing_frequency: 50
+    # Synchronization indicator: 0 is none, 1 is local, and 2 is global.
+    smp_synch: 0
